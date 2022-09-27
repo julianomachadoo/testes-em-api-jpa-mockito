@@ -1,4 +1,4 @@
-package com.github.julianomachadoo.junitmockitoapi.resource;
+package com.github.julianomachadoo.junitmockitoapi.resources;
 
 import com.github.julianomachadoo.junitmockitoapi.domain.User;
 import com.github.julianomachadoo.junitmockitoapi.services.UserService;

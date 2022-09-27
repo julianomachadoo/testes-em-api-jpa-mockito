@@ -3,6 +3,7 @@ package com.github.julianomachadoo.junitmockitoapi.services.impl;
 import com.github.julianomachadoo.junitmockitoapi.domain.User;
 import com.github.julianomachadoo.junitmockitoapi.repositories.UserRepository;
 import com.github.julianomachadoo.junitmockitoapi.services.UserService;
+import com.github.julianomachadoo.junitmockitoapi.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Integer id) {
         Optional<User> user = repository.findById(id);
-        return user.orElse(null);
+        return user.orElseThrow(()-> new ObjectNotFoundException("Objeto não encontrado"));
     }
 }
