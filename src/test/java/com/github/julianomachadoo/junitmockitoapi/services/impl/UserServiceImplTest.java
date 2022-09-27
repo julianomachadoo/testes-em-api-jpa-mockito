@@ -24,6 +24,7 @@ class UserServiceImplTest {
     public static final String NAME = "Valdir";
     public static final String EMAIL = "valdir@mail.com";
     public static final String PASSWORD = "123";
+    public static final String OBJETO_NAO_ENCONTRADO = "Objeto não encontrado";
     @InjectMocks
     private UserServiceImpl service;
 
@@ -33,6 +34,8 @@ class UserServiceImplTest {
     @Mock
     private ModelMapper mapper;
 
+    private User user;
+    private UserDTO userDTO;
     private Optional<User> optionalUser;
 
     @BeforeEach
@@ -57,13 +60,13 @@ class UserServiceImplTest {
 
     @Test
     void whenFindByIdThenReturnAnObjectNotFoundException () {
-        when(repository.findById(anyInt())).thenThrow(new ObjectNotFoundException("Objeto não encontrado"));
+        when(repository.findById(anyInt())).thenThrow(new ObjectNotFoundException(OBJETO_NAO_ENCONTRADO));
 
         try {
             service.findById(ID);
         } catch (Exception ex) {
             assertEquals(ObjectNotFoundException.class, ex.getClass());
-            assertEquals("Objeto não encontrado", ex.getMessage());
+            assertEquals(OBJETO_NAO_ENCONTRADO, ex.getMessage());
         }
     }
 
@@ -84,8 +87,8 @@ class UserServiceImplTest {
     }
 
     private void startUser() {
-        User user = new User(ID, NAME, EMAIL, PASSWORD);
-        UserDTO userDTO = new UserDTO(ID, NAME, EMAIL, PASSWORD);
+        user = new User(ID, NAME, EMAIL, PASSWORD);
+        userDTO = new UserDTO(ID, NAME, EMAIL, PASSWORD);
         optionalUser = Optional.of(new User(ID, NAME, EMAIL, PASSWORD));
     }
 }
