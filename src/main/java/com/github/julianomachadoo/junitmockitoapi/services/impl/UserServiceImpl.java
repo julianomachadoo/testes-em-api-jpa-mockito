@@ -4,6 +4,7 @@ import com.github.julianomachadoo.junitmockitoapi.domain.User;
 import com.github.julianomachadoo.junitmockitoapi.domain.dto.UserDTO;
 import com.github.julianomachadoo.junitmockitoapi.repositories.UserRepository;
 import com.github.julianomachadoo.junitmockitoapi.services.UserService;
+import com.github.julianomachadoo.junitmockitoapi.services.exceptions.DataIntegrityViolationException;
 import com.github.julianomachadoo.junitmockitoapi.services.exceptions.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +22,27 @@ public class UserServiceImpl implements UserService {
     private ModelMapper mapper;
 
     @Override
-    public User findById(Integer id) {
+    public User findById (Integer id) {
         Optional<User> user = repository.findById(id);
         return user.orElseThrow(()-> new ObjectNotFoundException("Objeto não encontrado"));
     }
 
     @Override
-    public List<User> findAll() {
+    public List<User> findAll () {
         return repository.findAll();
     }
 
     @Override
-    public User create(UserDTO user) {
-        return repository.save(mapper.map(user, User.class));
+    public User create (UserDTO obj) {
+        findByEmail(obj);
+        return repository.save(mapper.map(obj, User.class));
     }
+
+    private void findByEmail (UserDTO obj) {
+        Optional<User> user = repository.findByEmail(obj.getEmail());
+        if (user.isPresent()) {
+            throw new DataIntegrityViolationException("E-mail já cadastrado no sistema");
+        }
+    }
+
 }
