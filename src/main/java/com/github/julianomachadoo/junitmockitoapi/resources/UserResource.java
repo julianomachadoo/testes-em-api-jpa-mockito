@@ -19,6 +19,7 @@ import static org.springframework.http.ResponseEntity.*;
 public class UserResource {
 
     public static final String ID = "/{id}";
+
     @Autowired
     private UserService service;
 

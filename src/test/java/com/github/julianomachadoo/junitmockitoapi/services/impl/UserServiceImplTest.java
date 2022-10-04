@@ -23,24 +23,23 @@ import static org.mockito.MockitoAnnotations.openMocks;
 class UserServiceImplTest {
 
     public static final Integer ID = 1;
+    public static final int INDEX = 0;
     public static final String NAME = "Valdir";
     public static final String EMAIL = "valdir@mail.com";
     public static final String PASSWORD = "123";
     public static final String OBJETO_NAO_ENCONTRADO = "Objeto não encontrado";
-    public static final int INDEX = 0;
     public static final String E_MAIL_JA_CADASTRADO_NO_SISTEMA = "E-mail já cadastrado no sistema";
-    @InjectMocks
-    private UserServiceImpl service;
-
-    @Mock
-    private UserRepository repository;
-
-    @Mock
-    private ModelMapper mapper;
 
     private User user;
     private UserDTO userDTO;
     private Optional<User> optionalUser;
+
+    @InjectMocks
+    private UserServiceImpl service;
+    @Mock
+    private UserRepository repository;
+    @Mock
+    private ModelMapper mapper;
 
     @BeforeEach
     void setUp() {
